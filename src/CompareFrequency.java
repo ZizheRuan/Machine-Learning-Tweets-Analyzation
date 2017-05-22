@@ -12,6 +12,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+/**
+ * set the number of word occurrence threshold(NoSelect) and sentiment incline threshold(majority), 
+ * the program will list the words that have obvious sentiment incline (over the “majority”). 
+ * Then the selected words are write to selectedAttributes.txt, selectedAttributesP.txt,selectedAttributesNeu.txt,
+ * selectedAttributesNeg.txt to be further processed.
+ * @author zizheruan
+ *
+ */
 public class CompareFrequency {
 
 	
@@ -21,7 +29,7 @@ public class CompareFrequency {
 	 static final String readNegative = "countNegativeResult";
 	 static final String writeTo = "MyTrain";
 	 static final int NoSelect = 10000;
-	 static final int majority = 34;
+	 static final int majority = 60;
 	 public static ArrayList<String> selectedAttributes = new ArrayList<String>();
 	 
 	 public static ArrayList<String> selectedAttributesP = new ArrayList<String>();

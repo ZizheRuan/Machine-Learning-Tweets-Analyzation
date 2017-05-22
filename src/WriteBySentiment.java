@@ -11,7 +11,14 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-
+/**
+ * the WriteBySentiment.java reads both train-tweets.txt and train-labels.txt, 
+ * then combine the tweets and their sentiments, divide them by sentiment, 
+ * write to 3 different txt files(countPositive.txt, countNeutral.txt, countNegative.txt). 
+ * In each output file, all of the tweets are belong to one the same sentiment.
+ * @author zizheruan
+ *
+ */
 public class WriteBySentiment {
 
 	 static final int NoInstances = 22987;
@@ -58,7 +65,7 @@ public class WriteBySentiment {
 				 String tweetNegativeTemp = tweetParseByLine[i];
 				 tweetNegative.add(tweetNegativeTemp);
 				 break;
-			default:System.out.println("shabile:"+labels[i]);
+			default:System.out.println("wrong:"+labels[i]);
 				 break;
 			 }
 		 }

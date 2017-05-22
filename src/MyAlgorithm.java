@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * MyAlgorithm.java contains my own method, it can predict sentiments and clearly print out the accuracy.
+ * @author zizheruan
+ *
+ */
 public class MyAlgorithm {
 
 	public static void main(String[] args) throws IOException {

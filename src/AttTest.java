@@ -15,7 +15,13 @@ import java.util.ArrayList;
  
  /**
   * Write the MyTrain.txt and MyDev.txt
-  *
+  *generate the attribute-instance matrix for Weka to read. The program AttTest.java reads training data 
+  *and dev-data seperately, detect the occurrence of the words in the attributes files we selected, then 
+  *fill up the matrix. It eventually output MyTrain.txt and MyDev.txt. These two txt files are actually 
+  *wrote in CSV format, so we just need to change the name of the txt files to csv. Then it can be imported 
+  *to Weka to be tested. If in the “test set” section, the MyDev.csv can not be properly read, convert the 
+  *MyDev.csv to MyDev.arff, then it will work. Note you need to comment/comment out between train and dev 
+  *at the beginning of the program to generate the two files.
   * @author FracPete
   */
  public class AttTest {
@@ -23,15 +29,22 @@ import java.util.ArrayList;
 //	 static final int NoAttributes = 20;
 	 static int NoAttributes;
 	
-//	 static final int NoInstances = 22987;
-//	 static final String readTweets = "train-tweets";
-//	 static final String readLabels = "train-labels";
-//	 static final String writeTo = "MyTrain";
+	 static final int NoInstances = 22987;
+	 static final String readTweets = "train-tweets";
+	 static final String readLabels = "train-labels";
+	 static final String writeTo = "MyTrain";
 	 
-	 static final String readTweets = "dev-tweets";
-	 static final String readLabels = "dev-labels";
-	 static final String writeTo = "MyDev";
-	 static final int NoInstances = 4926;
+//	 static final String readTweets = "dev-tweets";
+//	 static final String readLabels = "dev-labels";
+//	 static final String writeTo = "MyDev";
+//	 static final int NoInstances = 4926;
+	 
+//	 static final String readTweets = "test-tweets";
+//	 static final String readLabels = "test-tweets";
+//	 static final String writeTo = "MyTest";
+//	 static final int NoInstances = 4926;
+	 
+	 
 	 
 //	 static String[][] valueMatrix;
 	 static String[][] valueMatrix;
@@ -54,47 +67,25 @@ import java.util.ArrayList;
 		 valueMatrix[0][NoAttributes-1] = "sentiment";
 		 for(int i=0;i<labelParseByLine.length;i++){
 			 String[] labelTemp = labelParseByLine[i].split("\\s");
-			 labels[i] = labelTemp[1];
+			 labels[i] = labelTemp[0];//changed 1 to 0!!!
 			 valueMatrix[i+1][NoAttributes-1] = labels[i];//make room for header
 		 }
 		 
 		 		 
 		 String tweetLines = readFile(readTweets);
 		 String[] tweetParseByLine = tweetLines.split("\\n");
-		 //monday,sundan,tomorrow, like, we,saturday,well,good,tonight,happy,ice,
-		 //should,white,back,new,night
-//		 addNominalAttribute("rich",0,valueMatrix,tweetParseByLine);//注意空格;0-(No.-2)
-//		 addNominalAttribute("love",1,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" mosuloffensive  ",2,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" fuck ",3,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" pgachampionship ",4,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" birthday ",5,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" shit ",6,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" steal ",7,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" stupid ",8,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" dog ",9,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" excited ",10,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" thank ",11,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" awesome ",12,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" happy ",13,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" fun ",14,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" gucci ",15,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" oliseh ",16,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" tonight ",17,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" eagles ",18,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" kasich ",19,valueMatrix,tweetParseByLine);
-//		 addNominalAttribute(" madrid ",20,valueMatrix,tweetParseByLine);
+
 
 		 for(int i=0;i<selectedAttributes.length-2;i++){
 			 addNominalAttribute(" "+selectedAttributes[i]+" ",i,valueMatrix,tweetParseByLine);
 		 }
 		 
 		 
-		 //排出CSV格式的矩阵，准备write
+		 //make the matrix in CSV format, get ready to write
 		 linesArray = new String[NoInstances];
 		 for(int i=0;i<NoInstances;i++){
 			 linesArray[i] = valueMatrix[i][0]+",";//column 1#
-			 for(int j=1;j<NoAttributes-2;j++){//column 2-倒数第二个#
+			 for(int j=1;j<NoAttributes-2;j++){//column 2-#
 				 linesArray[i] = linesArray[i]+valueMatrix[i][j]+",";
 			 }
 			 linesArray[i] = linesArray[i]+valueMatrix[i][NoAttributes-1]+"\n";//column last one#
@@ -171,7 +162,7 @@ import java.util.ArrayList;
 				 for (int  i=0; i<tweetParseByLine.length; i++){
 					 tweetParseByLine[i] = tweetParseByLine[i].toLowerCase(); 
 					 if(tweetParseByLine[i].contains(attributeName)){//The name is special, so I didn't place spaces before and after the word.
-						 valueMatrix[i+1][index]="T";//assign in matrix,留出一行给header
+						 valueMatrix[i+1][index]="T";//assign in matrix,leave one line for header
 //				         String[] elements = tweetParseByLine[i].split("[^a-zA-Z0-9]+");  
 //				         int count = 0;  
 //				         for(String str:elements){
